@@ -1,7 +1,44 @@
 ﻿@page "/"
+@using PortkablePass.Core
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+<div>
+    <label>
+        Domain Name:
+        <InputText @bind-Value="@_domainName" />
+    </label>
+</div>
+<div>
+    <label>
+        Master Password:
+        <InputText @bind-Value="@_masterPassword" />
+    </label>
+</div>
+<div>
+    <button @onclick="GeneratePassword">Generate Password</button>
+</div>
+<div>
+    <label>
+        Generated Password:
+        <InputText @bind-Value="@_generatedPassword" />
+    </label>
+</div>
+
+@code {
+    private string _domainName = "";
+    private string _masterPassword = "";
+    private string _generatedPassword = "";
+
+    private readonly PasswordGenerator _passwordGenerator = new();
+
+    private void GeneratePassword()
+    {
+        if (_masterPassword == "" || _domainName == "")
+            return;
+        
+        _generatedPassword = _passwordGenerator.GeneratePassword(_domainName, _masterPassword);
+    }
+}
