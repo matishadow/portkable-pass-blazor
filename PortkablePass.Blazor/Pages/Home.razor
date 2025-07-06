@@ -1,5 +1,7 @@
 ﻿@page "/"
 @using PortkablePass.Core
+@using CurrieTechnologies.Razor.Clipboard
+@inject ClipboardService clipboard
 
 <PageTitle>Home</PageTitle>
 
@@ -24,6 +26,7 @@
     <label>
         Generated Password:
         <InputText @bind-Value="@_generatedPassword" />
+        <button @onclick="(async e => await clipboard.WriteTextAsync(_generatedPassword))">Copy To Clipboard</button>
     </label>
 </div>
 
